@@ -1,96 +1,350 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Ad Copy Generator - Cinteia</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ad Copy Generator — Cinteia Tools</title>
+<meta name="description" content="Generá textos de alto impacto para tus anuncios en segundos. Gratis y sin registro.">
+
+<meta property="og:title" content="Ad Copy Generator | Cinteia Tools">
+<meta property="og:description" content="Creá anuncios de alto impacto en segundos para tu negocio.">
+<meta property="og:image" content="https://cinteia.com/assets/img/webcinteia.jpg">
+<meta property="og:url" content="https://cinteia.com/tools/ad-copy-generator/">
+<meta property="og:type" content="website">
+
+<link rel="icon" href="/assets/img/faviconc.ico">
+<link rel="apple-touch-icon" href="/tools/assets/img/icon-192.png">
+<link rel="canonical" href="https://cinteia.com/tools/ad-copy-generator/">
+<link rel="manifest" href="/tools/manifest.json">
+<meta name="theme-color" content="#080808">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="../assets/css/main.css">
+
+<style>
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 40px 20px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .wrapper {
+    width: 100%;
+    max-width: 520px;
+  }
+
+  .topnav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+  }
+
+  .tool-header { margin-bottom: 32px; }
+  .tool-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 4px 12px;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+  .tool-header h1 {
+    font-size: 1.9rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+  .tool-header p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* FORMAT PILLS */
+  .format-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .format-pill {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: 0.78rem;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all var(--transition);
+    user-select: none;
+  }
+  .format-pill:hover {
+    border-color: var(--border-h);
+    color: var(--text);
+  }
+  .format-pill.active {
+    background: white;
+    border-color: white;
+    color: black;
+  }
+
+  /* COPIES RESULT */
+  .copies-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 4px;
+  }
+
+  .copy-item {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    animation: fadeUp 0.3s ease both;
+    position: relative;
+  }
+  .copy-item:nth-child(2) { animation-delay: 0.06s; }
+  .copy-item:nth-child(3) { animation-delay: 0.12s; }
+
+  .copy-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .copy-format-tag {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+
+  .copy-text {
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--text);
+    white-space: pre-line;
+  }
+
+  .regen-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 9px 14px;
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: all var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 16px;
+    width: 100%;
+    justify-content: center;
+  }
+  .regen-btn:hover {
+    border-color: var(--border-h);
+    color: var(--text);
+  }
+
+  .generating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--muted);
+    font-size: 0.85rem;
+    padding: 8px 0;
+  }
+</style>
 </head>
+<body>
 
-<body class="bg-gradient-to-br from-gray-900 to-black text-white min-h-screen flex items-center justify-center p-6">
+<div class="wrapper">
 
-  <div class="w-full max-w-lg">
+  <!-- TOP NAV -->
+  <div class="topnav">
+    <a href="../" class="back-link">
+      <i class="fas fa-arrow-left" style="font-size:0.75rem;"></i> Herramientas
+    </a>
+    <a href="https://github.com/soykevinancheta/cinteia-ad-copy-generator" target="_blank" rel="noopener" class="btn btn-ghost btn-icon" style="width:36px;height:36px;font-size:0.9rem;" title="Ver código">
+      <i class="fab fa-github"></i>
+    </a>
+  </div>
 
-    <!-- HEADER -->
-    <div class="text-center mb-8">
-      <h1 class="text-3xl font-bold mb-2">
-        Generador de Anuncios
-      </h1>
-      <p class="text-gray-400">
-        Crea textos de alto impacto para tus campañas 🚀
-      </p>
+  <!-- HEADER -->
+  <div class="tool-header">
+    <div class="tool-badge"><i class="fas fa-bolt"></i> Generador</div>
+    <h1>Ad Copy Generator</h1>
+    <p>Generá textos de alto impacto para tus anuncios. Seleccioná el formato y en segundos tenés opciones listas.</p>
+  </div>
+
+  <!-- CARD -->
+  <div class="card">
+
+    <div class="field">
+      <label for="product">Producto o servicio</label>
+      <input id="product" type="text" placeholder="Ej: Curso de fotografía online">
     </div>
 
-    <!-- CARD -->
-    <div class="bg-gray-800/80 backdrop-blur p-8 rounded-2xl shadow-2xl border border-gray-700">
+    <div class="field">
+      <label for="benefit">Beneficio principal</label>
+      <input id="benefit" type="text" placeholder="Ej: Sacar fotos profesionales desde cero">
+    </div>
 
-      <div class="mb-5">
-        <label class="block mb-2 text-sm text-gray-300">Producto o servicio</label>
-        <input id="product" type="text"
-          class="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-white">
+    <div class="field">
+      <label for="audience">Público objetivo</label>
+      <input id="audience" type="text" placeholder="Ej: Emprendedores, mamás, jóvenes...">
+    </div>
+
+    <div class="field" style="margin-bottom:24px;">
+      <label>Formato de anuncio</label>
+      <div class="format-group" id="format-group">
+        <div class="format-pill active" data-format="social">📱 Redes sociales</div>
+        <div class="format-pill" data-format="headline">🎯 Headline</div>
+        <div class="format-pill" data-format="story">⚡ Historia</div>
+        <div class="format-pill" data-format="email">✉️ Email subject</div>
       </div>
-
-      <div class="mb-6">
-        <label class="block mb-2 text-sm text-gray-300">Beneficio principal</label>
-        <input id="benefit" type="text"
-          class="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-white">
-      </div>
-
-      <!-- BOTÓN -->
-      <button onclick="generateCopy()"
-        class="w-full bg-white text-black p-3 rounded-xl font-semibold hover:bg-gray-300 transition transform hover:scale-105">
-        Generar anuncio
-      </button>
-
-      <!-- RESULTADO -->
-      <div id="result" class="mt-6 text-sm text-gray-200 leading-relaxed"></div>
-
     </div>
 
-    <!-- FOOTER -->
-    <div class="text-center mt-6 text-sm text-gray-500">
-      <a href="/tools/" class="hover:text-white transition">
-        ← Volver a herramientas
-      </a>
-    </div>
+    <button class="btn btn-primary" onclick="generateCopy()" id="gen-btn">
+      <i class="fas fa-bolt" style="font-size:0.8rem;"></i> Generar anuncios
+    </button>
+
+    <!-- RESULTADO -->
+    <div id="result" class="result-box"></div>
 
   </div>
 
-  <script>
-    function generateCopy() {
-      const product = document.getElementById("product").value;
-      const benefit = document.getElementById("benefit").value;
+  <!-- CTA -->
+  <div class="cta-strip" id="cta" style="display:none;">
+    <span>¿Querés anuncios que realmente vendan?</span>
+    <a href="https://cinteia.com" target="_blank" rel="noopener">Hablemos →</a>
+  </div>
 
-      if (!product || !benefit) {
-        document.getElementById("result").innerHTML = "⚠️ Completa todos los campos";
-        return;
-      }
+  <div style="text-align:center; margin-top:32px;">
+    <a href="https://cinteia.com/tools" class="back-link" style="font-size:0.78rem;">
+      <i class="fas fa-th"></i> Ver todas las herramientas
+    </a>
+  </div>
 
-      const copies = [
-        `🚀 ¿Buscas ${benefit}?<br><br>${product} es la solución que necesitas.<br>Empieza hoy mismo.`,
-        
-        `🔥 ${product} que realmente funciona<br><br>Logra ${benefit} sin complicaciones.<br>Da el siguiente paso.`,
-        
-        `💡 La forma más fácil de conseguir ${benefit}<br><br>Con ${product}, todo es más simple.<br>Descúbrelo ahora.`,
-        
-        `⚡ Deja de perder tiempo<br><br>${product} te ayuda a lograr ${benefit} rápido y fácil.<br>Empieza hoy.`,
-        
-        `📈 Mejora tus resultados hoy<br><br>${product} te permite alcanzar ${benefit} sin esfuerzo.<br>No te quedes atrás.`
-      ];
+</div>
 
-      const random = copies[Math.floor(Math.random() * copies.length)];
+<script src="../assets/js/main.js"></script>
+<script>
+  // Format pills
+  let selectedFormat = 'social';
+  document.querySelectorAll('.format-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.format-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      selectedFormat = pill.dataset.format;
+    });
+  });
 
-      // Simulación IA (delay)
-      document.getElementById("result").innerHTML = "🤖 Generando anuncio...";
+  const TEMPLATES = {
+    social: [
+      (p, b, a) => `¿Sos ${a || 'emprendedor'} y todavía no tenés ${b}?\n\n${p} cambia eso.\n\nEmpezá hoy, sin excusas. 👇`,
+      (p, b, a) => `Esto es para ${a || 'vos'}.\n\n${p} → ${b}.\n\nY lo mejor: podés empezar ahora mismo.`,
+      (p, b, a) => `El problema de muchos ${a || 'negocios'}:\nNo tienen ${b}.\n\nLa solución: ${p}.\n\n¿Lo probaste?`,
+      (p, b, a) => `Si pudiera darte ${b} en menos de lo que pensás...\n\n¿Lo tomarías?\n\nEso es exactamente lo que hace ${p}. 🎯`,
+      (p, b, a) => `${a ? `Para ${a}:` : 'Esto te va a interesar:'}\n\n${p} = ${b}.\nRápido. Simple. Sin vueltas.`,
+    ],
+    headline: [
+      (p, b) => `${p}: Lográ ${b} sin complicaciones`,
+      (p, b) => `La forma más rápida de conseguir ${b}`,
+      (p, b) => `${b} en tiempo récord con ${p}`,
+      (p, b) => `Dejá de buscar: ${p} es lo que necesitás para ${b}`,
+      (p, b) => `¿Querés ${b}? ${p} lo hace posible hoy`,
+    ],
+    story: [
+      (p, b, a) => `Hace unos meses, un ${a || 'emprendedor'} me contó que no lograba ${b}.\n\nHoy, después de probar ${p}, todo cambió.\n\nDeslizá para ver cómo. ➡️`,
+      (p, b, a) => `Honestamente, pensé que ${b} era difícil.\n\nHasta que descubrí ${p}.\n\n${a ? `Si sos ${a}, esto es para vos.` : 'Cambia todo.'}`,
+      (p, b, a) => `3 razones por las que ${a || 'los emprendedores'} eligen ${p}:\n\n1. ${b}\n2. Rápido y simple\n3. Resultados reales\n\n¿Cuál te convence más?`,
+    ],
+    email: [
+      (p, b) => `[${p}] ¿Todavía sin ${b}?`,
+      (p, b) => `La forma más simple de lograr ${b} (gratis)`,
+      (p, b) => `Esto cambia cómo conseguís ${b}`,
+      (p, b) => `Para ti: ${b} con ${p}`,
+      (p, b) => `¿Por qué no tenés ${b} todavía?`,
+    ],
+  };
 
-      setTimeout(() => {
-        let message = random;
+  function generateCopy() {
+    const product  = document.getElementById('product').value.trim();
+    const benefit  = document.getElementById('benefit').value.trim();
+    const audience = document.getElementById('audience').value.trim();
 
-        message += "<br><br><span class='text-white font-semibold'>👉 Si quieres anuncios que realmente vendan, contáctame en Cinteia.</span>";
+    const resultBox = document.getElementById('result');
+    const cta = document.getElementById('cta');
 
-        document.getElementById("result").innerHTML = message;
-      }, 1200);
+    if (!product || !benefit) {
+      resultBox.className = 'result-box show warn';
+      resultBox.innerHTML = '<div style="font-size:0.88rem;color:var(--yellow);">⚠️ Completá al menos el producto y el beneficio.</div>';
+      return;
     }
-  </script>
+
+    resultBox.className = 'result-box show';
+    resultBox.innerHTML = '<div class="generating"><div class="spinner"></div> Generando variantes...</div>';
+
+    setTimeout(() => {
+      const pool = TEMPLATES[selectedFormat];
+      // Shuffle y tomar 3
+      const shuffled = [...pool].sort(() => Math.random() - 0.5);
+      const selected = shuffled.slice(0, Math.min(3, shuffled.length));
+
+      const formatLabel = {
+        social: 'Redes sociales',
+        headline: 'Headline',
+        story: 'Historia',
+        email: 'Email subject',
+      }[selectedFormat];
+
+      const items = selected.map((fn, i) => {
+        const text = fn(product, benefit, audience);
+        return `
+          <div class="copy-item">
+            <div class="copy-meta">
+              <span class="copy-format-tag">${formatLabel} · Variante ${i + 1}</span>
+              <button class="copy-btn" onclick="copyToClipboard(${JSON.stringify(text)}, this)">Copiar</button>
+            </div>
+            <div class="copy-text">${text.replace(/\n/g, '<br>')}</div>
+          </div>
+        `;
+      }).join('');
+
+      resultBox.innerHTML = `
+        <div class="copies-list">${items}</div>
+        <button class="regen-btn" onclick="generateCopy()">
+          <i class="fas fa-redo" style="font-size:0.75rem;"></i> Generar otras variantes
+        </button>
+      `;
+
+      cta.style.display = 'flex';
+    }, 900);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.tagName === 'INPUT') generateCopy();
+  });
+</script>
 
 </body>
 </html>
